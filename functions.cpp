@@ -2,11 +2,10 @@
 #include <tchar.h>
 #include "functions.h"
 #include <memory.h>
-
 typedef unsigned char byte;
-
-byte * GetFileContent(long &fileLength, char * fileName)
+byte * GetFileContent(long &fileLength, char * fileName, FILE * logger)
 {
+	fprintf(logger, "%s\n", "Reading File......" );
 	FILE *fp = 0;
 	byte * bufByte = 0;
 	fp = fopen(fileName, "r+b");
@@ -20,7 +19,7 @@ byte * GetFileContent(long &fileLength, char * fileName)
 	fp = NULL;
 	return bufByte;
 }
-void DeepSearchTurbo(byte * haystack, int lenHaystack, byte * needle, int lenNeedle, int threshold)
+void DeepSearchTurbo(byte * haystack, int lenHaystack, byte * needle, int lenNeedle, int threshold, FILE * logger)
 {
     byte * element = new byte[lenNeedle];
 	memset(element, 0, lenNeedle);
@@ -32,8 +31,9 @@ void DeepSearchTurbo(byte * haystack, int lenHaystack, byte * needle, int lenNee
 			{				
 				element[j] = needle[i + j];
 			}
-			printf("Offset of needle: %d\n",  i);			
-			coreSearchTurbo(haystack, lenHaystack, element, threshold);
+			//printf("Offset of needle: %d\n",  i);
+			fprintf(logger, "Offset of needle: %d\n", i);
+			coreSearchTurbo(haystack, lenHaystack, element, threshold,logger);
 			int y = 0;
 		}
 		threshold++;
@@ -41,9 +41,11 @@ void DeepSearchTurbo(byte * haystack, int lenHaystack, byte * needle, int lenNee
 	while (threshold < (lenNeedle + 1));
 	printf("%s\n", "");
 	printf("%s\n", "*****************  Search terminated  **************************");
+	fprintf(logger, "%s\n", "");
+	fprintf(logger, "%s\n", "*****************  Search terminated  **************************");
 	delete[] element;
 }
-inline void coreSearchTurbo(byte* haystack, int lenHaystack, byte * elementTosearch, int sizeOfelement)
+inline void coreSearchTurbo(byte* haystack, int lenHaystack, byte * elementTosearch, int sizeOfelement,  FILE * logger)
 {	
 	int limit = (lenHaystack - sizeOfelement);
 	for (int q = 0; q <= limit; q++)	{
@@ -52,8 +54,8 @@ inline void coreSearchTurbo(byte* haystack, int lenHaystack, byte * elementTosea
 			int ret = memcmp(&haystack[q], elementTosearch, sizeOfelement);
 			if (ret == 0)
 			{
-				printf("Element of Size %d found at position %d\n", sizeOfelement, q);
-				printf("%s\n", "");
+				//printf("Element of Size %d found at position %d\n", sizeOfelement, q);				
+				fprintf(logger, "Element of Size %d found at position %d\n", sizeOfelement, q);				
 				q += sizeOfelement;
 			}
 		}
