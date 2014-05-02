@@ -6,7 +6,6 @@
 
 int main(int argc, char* argv[])
 {
-
 	if (argc != 4)
 	{
 		printf("%s\n", "Usage: filetosearch filesearchpattern threshold");
@@ -14,22 +13,24 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	else
-	{
-		// Read haistack content file
+	{	
 		FILE*	fileLogger = fopen("result.log", "w");
-		long  lenHaystack = 0;;
-		char * fileHaystack = argv[1];
-		byte * haystack = GetFileContent(lenHaystack, fileHaystack, fileLogger);
-		// Read needle content file
+		long  lenHaystack = 0;
+		int threshold = atoi(argv[3]);
 		long  lenNeedle = 0;
 		char * fileNeedle = argv[2];
 		byte * needle = GetFileContent(lenNeedle, fileNeedle, fileLogger);
-		// Setting Threshold
-		int threshold = atoi(argv[3]);
+		if (threshold > lenNeedle)
+		{
+			printf("%s %d\n", "The threshold must be less than or equal to ", lenNeedle);
+			delete[] needle;
+			return -1;
+		}
+		char * fileHaystack = argv[1];
+		byte * haystack = GetFileContent(lenHaystack, fileHaystack, fileLogger);
 		printf("%s %s %s %s\n","Searching in file", fileHaystack, "of contiguous patterns from file", fileNeedle);
 		printf("Threshold: %s\n", argv[3]);
-		printf("%s\n", "Please wait....");
-		// Performing deep search
+		printf("%s\n", "Please wait....");		
 		clock_t start, finish;
 		start = clock();		
 		DeepSearchTurbo(haystack, lenHaystack, needle, lenNeedle, threshold, fileLogger);
