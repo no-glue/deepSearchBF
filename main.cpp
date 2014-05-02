@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
 		byte * haystack = GetFileContent(lenHaystack, fileHaystack, fileLogger);
 		printf("%s %s %s %s\n","Searching in file", fileHaystack, "of contiguous patterns from file", fileNeedle);
 		printf("Threshold: %s\n", argv[3]);
+		fprintf(fileLogger, "Threshold: %s\n", argv[3]);
 		printf("%s\n", "Please wait....");		
 		clock_t start, finish;
 		start = clock();		

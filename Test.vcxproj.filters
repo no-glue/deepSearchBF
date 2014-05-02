@@ -16,4 +16,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TestSpecifics.docx" />
+    <None Include="Deep.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="haystack.bin" />
+    <None Include="needle.bin" />
+  </ItemGroup>
 </Project>
