@@ -7,17 +7,15 @@ inline void coreSearchTurbo(byte* haystack, int lenHaystack, byte * elementTosea
 {
 	int limit = (lenHaystack - sizeOfelement);
 	for (int q = 0; q <= limit; q++)	{
-		// The commented line checks the first and last element of the needle it should be better for long needles.(..To test)
-		//if ((haystack[q] == elementTosearch[0]) && (haystack[q + sizeOfelement - 1] == elementTosearch[sizeOfelement - 1]))
-		if (haystack[q] == elementTosearch[0])
+		// we check the first and last element of the needle. It should be beneficial for long needles.(..To test)
+		if ((haystack[q] == elementTosearch[0]) && (haystack[q + sizeOfelement - 1] == elementTosearch[sizeOfelement - 1]))
 		{
-			if (memcmp(&haystack[q], elementTosearch, sizeOfelement) == 0)
+			if (memcmp(elementTosearch, &haystack[q], sizeOfelement) == 0)
 			{
 				fprintf(logger, "Element of Size %d found at position %d\n", sizeOfelement, q);
 				q += sizeOfelement; 
 			}			
 		}
-		
 	}
 
 }
@@ -51,17 +49,7 @@ inline void DeepSearchTurbo(byte * haystack, int lenHaystack, byte * needle, int
 			memcpy(element, &needle[i], threshold);
 			fprintf(logger, "Offset of needle: %d\n", i);
 			coreSearchTurbo(haystack, lenHaystack, element, threshold, logger);
-		}
-		/*int limit = (lenNeedle - threshold);
-		for (int i = 0; i <= limit; i++)
-		{
-			for (int j = 0; j < threshold; j++)
-			{
-				element[j] = needle[i + j];
-			}
-			fprintf(logger, "Offset of needle: %d\n", i);
-			coreSearchTurbo(haystack, lenHaystack, element, threshold, logger);
-		}*/
+		}		
 		threshold++;
 	} while (threshold < (maxValue));
 	printf("%s\n", "");
