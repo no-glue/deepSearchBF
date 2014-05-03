@@ -17,7 +17,6 @@ inline void coreSearchTurbo(byte* haystack, int lenHaystack, byte * elementTosea
 			}			
 		}
 	}
-
 }
 
 inline byte * GetFileContent(long &fileLength, char * fileName, FILE * logger)
